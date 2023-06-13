@@ -1,0 +1,367 @@
+{
+	"info": {
+		"_postman_id": "71a092b5-9469-4dfd-9918-f5fe6113ea77",
+		"name": "Coursera - Meta Backend Capstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"\",\n    \"username\": \"testuser\",\n    \"password\": \"pass@123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8000/auth/users/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get auth token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"save token to collection\", () => {",
+									"    pm.response.to.have.status(200);",
+									"    const token = pm.response.json().token;",
+									"    pm.collectionVariables.set(\"token\", token);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"pass@123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8000/api-token-auth/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Menu Items",
+			"item": [
+				{
+					"name": "List",
+					"item": [
+						{
+							"name": "Get menu items",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"pass@123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/restaurant/menu/"
+							},
+							"response": []
+						},
+						{
+							"name": "Add menu item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"save id\", () => {",
+											"    pm.response.to.have.status(201);",
+											"    const menu_item_id = pm.response.json().id;",
+											"    pm.collectionVariables.set(\"menu_item_id\", menu_item_id);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"title\": \"pastaa3\",\n        \"price\": \"10.01\",\n        \"inventory\": 2\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/restaurant/menu/"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "Get menu items",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"pass@123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/restaurant/menu/{{menu_item_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "Update menu item",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"title\": \"pastaa3\",\n        \"price\": \"10.01\",\n        \"inventory\": 2\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/restaurant/menu/{{menu_item_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete menu item",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://localhost:8000/restaurant/menu/{{menu_item_id}}"
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": {
+					"value": "Token {{token}}",
+					"key": "Authorization"
+				}
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "list",
+					"item": [
+						{
+							"name": "Get bookings",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"pass@123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/restaurant/booking/tables/"
+							},
+							"response": []
+						},
+						{
+							"name": "Add booking",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"save id\", () => {",
+											"    pm.response.to.have.status(201);",
+											"    const booking_id = pm.response.json().id;",
+											"    pm.collectionVariables.set(\"booking_id\", booking_id);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{       \"name\": \"First name\",\n        \"number_of_guests\": 3,\n        \"booking_date\": \"2023-06-13T11:03:00Z\"\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/restaurant/booking/tables/"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "Get bookings",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"pass@123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/restaurant/booking/tables/{{booking_id}}/"
+							},
+							"response": []
+						},
+						{
+							"name": "Update booking",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"name\": \"user updated\",\n    \"number_of_guests\": 2,\n    \"booking_date\": \"2023-06-13T11:03:00Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/restaurant/booking/tables/{{booking_id}}/"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete booking",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://localhost:8000/restaurant/booking/tables/{{booking_id}}/"
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": {
+					"value": "Token {{token}}",
+					"key": "Authorization"
+				}
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "menu_item_id",
+			"value": ""
+		},
+		{
+			"key": "booking_id",
+			"value": ""
+		}
+	]
+}
