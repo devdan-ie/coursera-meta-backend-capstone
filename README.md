@@ -1,24 +1,30 @@
 Make sure to edit settings.py to point to your mysql instance.
 
 Install dependencies with pip/venv
+```
 cd coursera-backend-capstone
 python3 -m venv .venv
 source ./.venv/bin/activate
 pip install -r requirements.txt
-
+```
 
 OR install dependencies with pipenv
+```
 pipenv shell
-
+```
 
 Then run
+```
 cd littlelemon
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
+```
 
 You can also run tests with:
+```
 python manage.py test
+```
 
 
 How to see the static files:
